@@ -1,6 +1,6 @@
 const persona = {
   nombre: "Joel",
-  edad: 37,
+  edad: 20,
   direccion: {
     ciudad: "Qro",
     pais: "MX"
