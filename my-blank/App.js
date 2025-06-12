@@ -8,7 +8,7 @@ const Texto = ({ contenido }) => {
 export default function App() {
   return (
     <View style={styles.container}>
-      <Texto contenido="hola mundo react native" />
+      <Texto contenido="hola mundo react native joel" />
       <BotonPersonalizado titulo="presionar" accion={() => alert('¡Botón presionado!')} />
       <StatusBar style="auto" />
     </View>
