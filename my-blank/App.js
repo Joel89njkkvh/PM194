@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Switch } from 'react-native';
 import React, { useState } from 'react';
 
 const Texto = ({ style }) => {
@@ -7,23 +7,19 @@ const Texto = ({ style }) => {
   const actualizarTexto = () => { setContenido('Estado actualizado del Text') };
   return (
     <Text style={[styles.text, style]} onPress={actualizarTexto}>
-      {contenido}
+      <View style={{margin: 10 }}>
+        <Text style={[styles.text, style]}>{contenido}</Text>
+        <Button title='actualizarTexto'onPress={actualizarTexto} color='purple'></Button>
+      </View>
     </Text>
   );
 };
 
-const Boton = () => {
-  const [boton, setBoton] = useState("Tlajaba!!");
-  const cambiarBoton = () => { setBoton("Dejar Tlajaba!!") };
-  return (
-    <Button title={boton} onPress={cambiarBoton} />
-  );
-};
 
 export default function App() {
   return (
     <View style={styles.container}>
-      {/* <Boton /> */}
+    
       <Texto     style={styles.red} />
       <Texto     style={styles.blue} />
       <Texto     style={styles.green} />
