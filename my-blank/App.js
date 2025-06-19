@@ -14,7 +14,7 @@ const Texto = ({ style }) => {
 
 const Boton = () => {
   const [boton, setBoton] = useState("Tlajaba!!");
-  const cambiarBoton = () => { setBoton("Deja Tlajaba!!") };
+  const cambiarBoton = () => { setBoton("Dejar Tlajaba!!") };
   return (
     <Button title={boton} onPress={cambiarBoton} />
   );
