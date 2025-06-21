@@ -1,66 +1,124 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, Switch } from 'react-native';
 import React, { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Alert,
+  ScrollView,
+  Platform,
+} from 'react-native';
 
-const Interruptor = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
+export default function App() {
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [comments, setComments] = useState('');
+  const [age, setAge] = useState('');
+  const [lastMessage, setLastMessage] = useState('');
 
-  const toggleSwitch = () => {
-    setIsEnabled(previousState => !previousState);
+  const showAlert = () => {
+    const msg = `Nombre: ${name}\nEdad: ${age}\nComentarios: ${comments || 'Ninguno'}`;
+
+    if (name.trim() === '' || password.trim() === '' || age.trim() === '') {
+      if (Platform.OS === 'web') {
+        setLastMessage('⚠️ Completa todos los campos obligatorios.');
+      } else {
+        Alert.alert('Campos obligatorios', 'Por favor, completa todos los campos obligatorios.');
+      }
+    } else {
+      if (Platform.OS === 'web') {
+        setLastMessage(`✅ Bienvenido\n${msg}`);
+      } else {
+        Alert.alert('¡Bienvenido!', msg);
+      }
+    }
   };
 
   return (
-    <View style={styles.container}>
-      <Text>{isEnabled ? 'Activado' : 'Desactivado'}</Text>
-
-      <Switch
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={isEnabled}
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Nombre (normal):</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Escribe tu nombre"
+        value={name}
+        onChangeText={setName}
       />
-    </View>
-  );
-};
 
-const Texto = ({ style }) => {
-  const [contenido, setContenido] = useState("Hola Mundo RNative");
-  const actualizarTexto = () => { setContenido('Estado actualizado del Text') };
+      <Text style={styles.title}>Contraseña (oculta):</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Escribe tu contraseña"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry={true}
+      />
 
-  return (
-    <View style={{ margin: 10 }}>
-      <Text style={[styles.text, style]}>{contenido}</Text>
-      <Button title='Actualizar Texto' onPress={actualizarTexto} color='purple' />
-    </View>
-  );
-};
+      <Text style={styles.title}>Edad (numérico):</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Escribe tu edad"
+        value={age}
+        onChangeText={setAge}
+        keyboardType="numeric"
+      />
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Interruptor />
-      <Texto style={styles.red} />
-      <Texto style={styles.blue} />
-      <Texto style={styles.green} />
-      <StatusBar style="auto" />
-    </View>
+      <Text style={styles.title}>Comentarios (multilínea):</Text>
+      <TextInput
+        style={[styles.input, { height: 100, textAlignVertical: 'top' }]}
+        placeholder="Escribe tus comentarios"
+        value={comments}
+        onChangeText={setComments}
+        multiline={true}
+        numberOfLines={4}
+      />
+
+      <Text style={styles.title}>Campo solo lectura:</Text>
+      <TextInput
+        style={styles.input}
+        value="Este campo no se puede editar"
+        editable={false}
+      />
+
+      <View style={{ width: '100%', marginTop: 10 }}>
+        <Button title="Mostrar alerta" onPress={showAlert} />
+      </View>
+
+      {Platform.OS === 'web' && !!lastMessage && (
+        <Text style={styles.webMessage}>{lastMessage}</Text>
+      )}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
+    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 17,
+    color: '#333',
+    marginBottom: 6,
+    alignSelf: 'flex-start',
+  },
+  input: {
+    height: 44,
+    borderColor: '#bbb',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 16,
+    borderRadius: 8,
     backgroundColor: '#fff',
-    alignItems: 'baseline',
-    justifyContent: 'center',
-    flexDirection: 'row-reverse',
+    width: '100%',
+    fontSize: 15,
   },
-  text: {
-    color: "white",
-    fontSize: 20,
+  webMessage: {
+    marginTop: 20,
+    fontSize: 16,
+    color: 'green',
+    textAlign: 'center',
   },
-  red: { backgroundColor: 'red' },
-  blue: { backgroundColor: 'blue' },
-  green: { backgroundColor: 'green' },
 });
