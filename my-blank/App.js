@@ -9,8 +9,8 @@ for (let i=0; i<76; i++){
 
 export default function App(){
   return(
-    <ScrollView contentContainerStyle={styles.background} showsVerticalScrollIndicator={false}>
-        <View>{texto}</View>;
+    <ScrollView contentContainerStyle={styles.background} showsHorizontalScrollIndicator={false}>
+        <View style={styles.row} >{texto}</View>;
     </ScrollView>
 
   )
