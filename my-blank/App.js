@@ -1,45 +1,52 @@
-import { StyleSheet, View, Text, ImageBackground, ScrollView } from "react-native";
+import { StyleSheet, View, Text, Button, ActivityIndicator } from "react-native";
 import { useEffect, useState } from "react";
 
-const texto = [];
-for (let i=0; i<76; i++){
-  texto.push(<Text >Hola Mundo</Text>);
+export default function App() {
+  const [loading, setLoading] = useState(false);
+  const [mensaje, setMensaje] = useState('');
+
+  const simularCarga = () => {
+    setLoading(true);
+    setMensaje('');
+    setTimeout(() => {
+      setLoading(false);
+      setMensaje('Carga Completa');
+    }, 2000);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.titulo}>Carga</Text>
+
+      {loading ? (
+        <>
+          <ActivityIndicator size="large" color="#209CDB" />
+          <Text>Cargando...</Text>
+        </>
+      ) : (
+        <>
+          <Button title="Iniciar Carga" onPress={simularCarga} />
+          {mensaje !== '' && <Text style={styles.mensaje}>{mensaje}</Text>}
+        </>
+      )}
+    </View>
+  );
 }
 
-
-export default function App(){
-  return(
-    <ScrollView contentContainerStyle={styles.background} showsHorizontalScrollIndicator={false}>
-        <View style={styles.row} >{texto}</View>;
-    </ScrollView>
-
-  )
-
-}
-
-// 4. Estilos simples
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
-    color: 'white',
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginBottom: 10,
+  titulo: {
+    fontSize: 24,
+    marginBottom: 20,
   },
-  subtitle: {
-    color: 'white',
-    fontSize: 18,
-  }
+  mensaje: {
+    marginTop: 20,
+    fontSize: 20,
+    color: 'green',
+    fontWeight:'bold',
+  },
 });
