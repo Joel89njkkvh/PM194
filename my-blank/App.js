@@ -25,14 +25,12 @@ export default function App() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Render item para FlatList y SectionLis
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <Text style={styles.nombre}>{item.nombre}</Text>
     </View>
   );
 
-  // Para SectionList, definimos las secciones
   const sections = [
     { title: "Frutas", data: frutas },
     { title: "Verduras", data: verduras },
