@@ -25,7 +25,7 @@ export default function App() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Render item para FlatList y SectionList
+  // Render item para FlatList y SectionLis
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <Text style={styles.nombre}>{item.nombre}</Text>
